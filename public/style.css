@@ -477,3 +477,17 @@ html,body {
         width: 16rem;
     }
 }
+
+@media(max-height: 450px){
+    .realTicketBox {
+        width: 73%;
+        height: 44%;
+    }
+
+    .ticket-box {
+        height: 10rem;
+        top: 15rem;
+        left: calc((100vw - 18rem)/2);
+        width: 16rem;
+    }
+}

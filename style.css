@@ -1,0 +1,274 @@
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Lato', sans-serif;
+}
+
+.content {
+    /* min-height: 100vh; */
+    background: thistle;
+    /* flex-wrap: wrap; */
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+.header {
+    display: flex;
+    height: 15vh;
+    width: 100%;
+    background: #1e3d44;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.tickets-container {
+    height: 85vh;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 4rem;
+    overflow: auto;
+    grid-gap: 50px;
+    background: #d0eaf7;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.ticket-filters {
+    display: flex;
+    height: 47%;
+    width: 24%;
+    background: #336773;
+    border-radius: 9px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.filter {
+    width: 9%;
+    border-radius: 6px;
+    opacity: 0.5;
+    height: 36%;
+    background: teal;
+}
+
+.red {
+    background: #ff0707 !important;
+}
+
+.red:hover {
+    background-color: #d30000;
+}
+
+.orange {
+    background: #FFA500 !important;
+}
+
+.orange:hover {
+    background-color: #FFA500;
+}
+
+.green {
+    background: #00ff15 !important;
+}
+
+.green:hover {
+    background-color: #00bb0f;
+}
+
+.black {
+    background: #000 !important;
+}
+
+.black:hover {
+    background-color: #000;
+}
+
+.ticket-actions {
+    display: flex;
+    justify-content: normal;
+    align-items: center;
+    background: #336773;
+    width: 13%;
+    height: 45%;
+    border-radius: 18px;
+}
+
+.open-modal {
+    width: 50%;
+    height: 100%;
+    background: #336773;
+    display: flex;
+    align-items: center;
+    border-radius: 18px;
+    justify-content: center;
+}
+
+.open-modal:hover {
+    background-color: #234750;
+}
+
+.fas {
+    /* padding: 25px; */
+    color: white;
+    font-size: 1.5rem;
+}
+
+.fa-plus {
+}
+
+.close-modal {
+    width: 50%;
+    height: 100%;
+    background: #336773;
+    display: flex;
+    align-items: center;
+    border-radius: 18px;
+    justify-content: center;
+}
+
+.close-modal:hover {
+    background-color: #234750;
+}
+
+.fa-times {
+}
+
+.filter:hover {
+    opacity: 1;
+}
+
+.ticket-box {
+    /* background: yellowgreen; */
+    height: 25rem;
+    display: flex;
+    outline: none;
+    position: absolute;
+    top: 15rem;
+    left: calc((100vw - 30rem)/2);
+    width: 50rem;
+}
+
+.ticket-textbox {
+    display: flex;
+    background: #ffe1ff;
+    padding: 2rem;
+    outline: none;
+    width: 71%;
+    flex-direction: column;
+    font-size: 2rem;
+    overflow: auto;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.ticket-pTag {
+}
+
+.ticket-filterbox {
+    display: flex;
+    justify-content: space-evenly;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
+    background: #140e54;
+}
+
+.colours {
+    background: violet;
+    height: 11%;
+    opacity: 0.5;
+    width: 52%;
+}
+
+.colours:hover {
+    opacity: 1;
+}
+
+.realTicketBox {
+    justify-content: flex-start;
+    border-bottom-right-radius: 8px;
+    width: 26%;
+    /* align-items: unset; */
+    flex-direction: column;
+    align-self: start;
+    display: flex;
+    height: 34%;
+    border-bottom-left-radius: 8px;
+    background: whitesmoke;
+}
+
+.ticket-header {
+    height: 14%;
+    width: 100%;
+}
+
+.realTextBoxID {
+    font-weight: bold;
+    padding: 8px;
+}
+
+.realText {
+    padding: 2rem;
+    align-self: center;
+}
+
+.active-filter {
+    border: 3px solid whitesmoke;
+    opacity: 1;
+}
+
+.ticket-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fa-trash-alt {
+    color: black;
+    margin: 8px;
+    cursor: pointer;
+}
+
+.modal-due-date {
+    width: 29%;
+    background: wheat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.label-due-date {
+    margin: 6px;
+}
+
+.due-date-input {
+    /* width: 80%; */
+    margin: 6px;
+}
+
+.submit-due-date {
+    margin: 6px;
+}
+
+.ticket-due-date {
+}
+
+.arrange-btn {
+    font-size: 0.9rem;
+    background: #336773;
+    height: 30%;
+    width: 5%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+}
+
+.arrange-btn:hover {
+    background-color: #234750;
+}

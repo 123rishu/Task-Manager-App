@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Management</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="content">
+        <div class="header">
+            <div class="ticket-filters">
+                <div class="filter red"></div>
+                <div class="filter orange"></div>
+                <div class="filter green"></div>
+                <div class="filter black"></div>
+            </div>
+            <div class="arrange-btn">
+                Arrange
+            </div>
+            <div class="ticket-actions">
+                <div class="open-modal">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="close-modal">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+        </div>
+        <div class="tickets-container">
+
+            <!-- <div class="realTicketBox">
+                <div class="ticket-header green"></div>
+                <div class="realTextBoxID">#exampleID</div>
+                <div class="realText">khadbvkhdsvhb</div>
+            </div> -->
+
+            <!-- <div class="ticket-box">
+                <div class="ticket-textbox" contenteditable="true">
+                    Enter your task here
+                </div>
+                <div class="ticket-filterbox">
+                    <div class="colours red active-filter"></div>
+                    <div class="colours blue"></div>
+                    <div class="colours green"></div>
+                    <div class="colours black"></div>
+                </div>
+                <div class="modal-due-date">
+                           <label for="birthday">Birthday:</label>
+                            <input type="date" id="birthday" name="birthday">   
+                            <input type="submit">         
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/short-unique-id@latest/dist/short-unique-id.min.js"></script>
+    <script>
+        let uid = new ShortUniqueId();
+    </script>
+    <script src="./script.js"></script>
+    <script src="./due-date.js"></script>
+    <script src="./arrange.js"></script>
+</body>
+
+</html>

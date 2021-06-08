@@ -250,7 +250,20 @@
 }
 
 .submit-due-date {
+    background: chartreuse;
     margin: 6px;
+    height: 8%;
+    width: 32%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    border: 1px solid darkgray;
+    cursor: pointer;
+}
+
+.submit-due-date:hover {
+    background-color: #08b817;
 }
 
 .ticket-due-date {

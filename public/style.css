@@ -449,3 +449,31 @@ html,body {
         width: 16rem;
     }
 }
+
+@media(max-width: 280px){
+    .realTicketBox {
+        width: 80%;
+        height: 48%;
+    }
+
+    .ticket-box {
+        height: 10rem;
+        top: 12rem;
+        left: calc((100vw - 16rem)/2);
+        width: 16rem;
+    }
+}
+
+@media(max-height: 410px){
+    .realTicketBox {
+        width: 80%;
+        height: 48%;
+    }
+
+    .ticket-box {
+        height: 10rem;
+        top: 12rem;
+        left: calc((100vw - 16rem)/2);
+        width: 16rem;
+    }
+}

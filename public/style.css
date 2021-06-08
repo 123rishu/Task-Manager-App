@@ -403,9 +403,9 @@
 @media(max-width : 450px){
     .ticket-box {
         height: 14rem;
-        top: 23rem;
-        left: calc((100vw - 16rem)/2);
-        width: 16rem;
+        top: 17rem;
+        left: calc((100vw - 18rem)/2);
+        width: 20rem;
     }
 
     .due-date-input {
@@ -429,5 +429,19 @@
     .realTicketBox {
         width: 51%;
         height: 27%;
+    }
+}
+
+@media(max-width: 320px) {
+    .realTicketBox {
+        width: 75%;
+        height: 31%;
+    }
+
+    .ticket-box {
+        height: 14rem;
+        top: 14rem;
+        left: calc((100vw - 16rem)/2);
+        width: 16rem;
     }
 }

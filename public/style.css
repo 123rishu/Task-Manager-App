@@ -491,3 +491,10 @@ html,body {
         width: 16rem;
     }
 }
+
+@media(max-height:550px){
+    .realTicketBox {
+        width: 70%;
+        height: 33%;
+    }
+}

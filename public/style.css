@@ -7,11 +7,13 @@
 
 .content {
     /* min-height: 100vh; */
-    background: thistle;
+    background: #d0eaf7;
     overflow: auto;
-    /* flex-wrap: wrap; */
-    /* display: flex; */
-    /* flex-direction: column; */
+    min-height: 100%;
+}
+
+html,body {
+    height: 100%; /* Needed for container's min-height  */  
 }
 
 .header {

@@ -140,26 +140,22 @@
 
 .ticket-box {
     /* background: yellowgreen; */
-    height: 25rem;
+    height: 19rem;
     display: flex;
     outline: none;
     position: absolute;
     top: 15rem;
     left: calc((100vw - 30rem)/2);
-    width: 50rem;
+    width: 33rem;
 }
 
 .ticket-textbox {
-    display: flex;
     background: #ffe1ff;
     padding: 2rem;
     outline: none;
     width: 71%;
-    flex-direction: column;
     font-size: 2rem;
     overflow: auto;
-    justify-content: flex-start;
-    align-items: flex-start;
 }
 
 .ticket-pTag {
@@ -190,6 +186,7 @@
     justify-content: flex-start;
     border-bottom-right-radius: 8px;
     width: 26%;
+    /* padding: 1px; */
     /* align-items: unset; */
     flex-direction: column;
     align-self: start;
@@ -202,6 +199,7 @@
 .ticket-header {
     height: 14%;
     width: 100%;
+    padding: 0px;
 }
 
 .realTextBoxID {
@@ -223,6 +221,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 3px;
 }
 
 .fa-trash-alt {
@@ -245,15 +244,20 @@
 }
 
 .due-date-input {
-    /* width: 80%; */
+    width: 80%;
     margin: 6px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 2px;
 }
 
 .submit-due-date {
     background: chartreuse;
     margin: 6px;
     height: 8%;
-    width: 32%;
+    width: 44%;
+    font-size: 0.9rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -284,4 +288,146 @@
 
 .arrange-btn:hover {
     background-color: #234750;
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+    .arrange-btn {
+        width: 10%;
+    }
+
+    .fas {
+        font-size: 1rem;
+    }
+
+    .realTicketBox {
+        width: 57%;
+        height: 34%;
+    }
+
+    .ticket-box {
+        height: 15rem;
+        top: 15rem;
+        left: calc((100vw - 27rem)/2);
+        width: 25rem;
+    }
+
+    .due-date-input {
+        width: 80%;
+    }
+
+    .submit-due-date {
+        height: 10%;
+        width: 47%;
+        font-size: 0.8rem;
+    }
+    
+
+    .tickets-container {
+        padding: 3rem;
+        grid-gap: 31px;
+    }
+}
+
+@media (max-width: 700px) {
+    .ticket-textbox {
+        padding: 2rem;
+        width: 71%;
+        font-size: 1.5rem;
+    }
+
+    .realTicketBox {
+        width: 60%;
+        height: 34%;
+    }
+
+    .submit-due-date {
+        width: 65%;
+        font-size: 0.8rem;
+    }
+    
+
+    .arrange-btn {
+        width: 11%;
+    }
+
+    .ticket-box {
+        height: 12rem;
+        top: 15rem;
+        left: calc((100vw - 21rem)/2);
+        width: 21rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .ticket-box {
+        height: 13rem;
+        top: 15rem;
+        left: calc((100vw - 17rem)/2);
+        width: 17rem;
+    }
+
+    * {
+        font-size: 0.8rem;
+    }
+
+    .arrange-btn {
+        width: 13%;
+    }
+
+    .tickets-container {
+        padding: 4rem;
+    }
+
+    .realTicketBox {
+        width: 66%;
+        height: 28%;
+    }
+
+    .ticket-textbox {
+        font-size: 1rem;
+    }
+
+    .submit-due-date {
+        width: 75%;
+        font-size: 0.6rem;
+    }
+
+    .due-date-input {
+        width: 80%;
+        font-size: 0.5rem;
+    }
+}
+
+
+@media(max-width : 450px){
+    .ticket-box {
+        height: 14rem;
+        top: 23rem;
+        left: calc((100vw - 16rem)/2);
+        width: 16rem;
+    }
+
+    .due-date-input {
+        width: 80%;
+        font-size: 0.4rem;
+    }
+
+    .ticket-textbox {
+        font-size: 1rem;
+    }
+
+    .submit-due-date {
+        width: 73%;
+        font-size: 0.7rem;
+    }
+
+    * {
+        font-size: 0.8rem;
+    }
+
+    .realTicketBox {
+        width: 51%;
+        height: 27%;
+    }
 }

@@ -99,7 +99,6 @@ function createTicket(ticketId, ticketFilter, ticketContent, ticketDueDate) {
     ticketDiv.classList.add("realTicketBox");
     ticketDiv.innerHTML = `<div class="ticket-header ${ticketFilter}"></div>
                 <div class="ticket-info">
-                    <div class="realTextBoxID">#${ticketId}</div>
                     <div class="ticket-due-date">due date:${ticketDueDate}</div>
                     <div class="ticket-delete">
                         <i class="fas fa-trash-alt" id=${ticketId}></i>
@@ -207,12 +206,13 @@ function addTicketViaSubmitBtn(modalDiv){
         let ticketId = uid();
 
         setSelectedFilter();
+        //<div class="realTextBoxID">#${ticketId}</div>
 
         let ticketDiv = document.createElement("div");
         ticketDiv.classList.add("realTicketBox");
         ticketDiv.innerHTML = `<div class="ticket-header ${selectedFilter}"></div>
                                     <div class="ticket-info">
-                                            <div class="realTextBoxID">#${ticketId}</div>
+                                            
                                             <div class="ticket-due-date">due date:${dueDateInput.value}</div>
                                             <div class="ticket-delete">
                                                     <i class="fas fa-trash-alt" id=${ticketId}></i>
@@ -267,7 +267,6 @@ function addTicket(e) {
         ticketDiv.classList.add("realTicketBox");
         ticketDiv.innerHTML = `<div class="ticket-header ${selectedFilter}"></div>
                                     <div class="ticket-info">
-                                            <div class="realTextBoxID">#${ticketId}</div>
                                             <div class="ticket-due-date">due date:${dueDateInput.value}</div>
                                             <div class="ticket-delete">
                                                     <i class="fas fa-trash-alt" id=${ticketId}></i>

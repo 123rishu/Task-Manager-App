@@ -8,6 +8,7 @@
 .content {
     /* min-height: 100vh; */
     background: thistle;
+    overflow: auto;
     /* flex-wrap: wrap; */
     /* display: flex; */
     /* flex-direction: column; */

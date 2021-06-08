@@ -154,12 +154,17 @@ function handleCloseModal() {
     }
 }
 
+let currModalDiv;
+
 function handleOpenModal() {
     let modal = document.querySelector(".ticket-box");
     if (modal) {
         return;
     }
     let modalDiv = createModal();
+    currModalDiv = modalDiv;
+    modalDiv.querySelector(".submit-due-date")
+        .addEventListener("click" , addTicketViaSubmitBtn);
 
     modalDiv.querySelector(".ticket-textbox")
         .addEventListener("click", clearModalTextBox);
@@ -167,29 +172,18 @@ function handleOpenModal() {
     modalDiv.querySelector(".ticket-textbox")
         .addEventListener("keypress", addTicket);
 
-    let allColoursFilters = modalDiv.querySelectorAll(".colours");
-
-    for (let i = 0; i < allColoursFilters.length; i++) {
-        allColoursFilters[i].addEventListener("click", chooseModalFilterAdvance);
-    }
-
     ticketContainer.append(modalDiv);
 }
 
 function chooseModalFilter(e) {
-
     //console.log(e.target.classList[1]);
     //console.log(e);
     let currChosenFilter = e.target.classList[1];
-
     if (e.target.classList[1] == selectedFilter) {
         return;
     }
-
     selectedFilter = currChosenFilter;
-
     document.querySelector(".colours.active-filter").classList.remove("active-filter");
-
     e.target.classList.add("active-filter");
 }
 
@@ -203,6 +197,59 @@ function setSelectedFilter() {
     else {
         selectedFilter = "green";
     }
+}
+
+function addTicketViaSubmitBtn(modalDiv){
+        let dueDateInput = currModalDiv.querySelector(".due-date-input");
+        currDueDate = dueDateInput.value;
+        let modalTextDiv = currModalDiv.querySelector(".ticket-textbox");
+        let modalText = currModalDiv.querySelector(".ticket-textbox").textContent;
+        let ticketId = uid();
+
+        setSelectedFilter();
+
+        let ticketDiv = document.createElement("div");
+        ticketDiv.classList.add("realTicketBox");
+        ticketDiv.innerHTML = `<div class="ticket-header ${selectedFilter}"></div>
+                                    <div class="ticket-info">
+                                            <div class="realTextBoxID">#${ticketId}</div>
+                                            <div class="ticket-due-date">due date:${dueDateInput.value}</div>
+                                            <div class="ticket-delete">
+                                                    <i class="fas fa-trash-alt" id=${ticketId}></i>
+                                            </div>
+                                    </div>
+                                    <div class="realText">${modalText}</div>`;
+        ticketDiv.querySelector(".ticket-header").addEventListener("click", toggleTicketFilter);
+        ticketDiv.querySelector(".ticket-delete i").addEventListener("click", handleTicketDelete);
+        ticketContainer.append(ticketDiv);
+
+       currModalDiv.remove();
+
+        //ticket has been appended on the document!!!
+        //false, null, undefined, 0, "", NaN
+        if (!localStorage.getItem('allTickets')) {
+            //first time ticket ayegi
+            let allTickets = [];
+            let ticketObject = {};
+            ticketObject.ticketId = ticketId;
+            ticketObject.ticketFilter = selectedFilter;
+            ticketObject.ticketContent = modalText;
+            ticketObject.ticketDueDate = dueDateInput.value;
+            allTickets.push(ticketObject);
+            localStorage.setItem("allTickets", JSON.stringify(allTickets));
+        }
+        else {
+            let allTickets = JSON.parse(localStorage.getItem("allTickets"));
+            let ticketObject = {};
+            ticketObject.ticketId = ticketId;
+            ticketObject.ticketFilter = selectedFilter;
+            ticketObject.ticketContent = modalText;
+            ticketObject.ticketDueDate = dueDateInput.value;
+            allTickets.push(ticketObject);
+            localStorage.setItem("allTickets", JSON.stringify(allTickets));
+        }
+
+        console.log("reached here");
 }
 
 function addTicket(e) {
@@ -260,7 +307,6 @@ function addTicket(e) {
     }
 }
 
-
 function clearModalTextBox(e) {
     if (e.target.getAttribute("data-typed") == "true") {
         return;
@@ -279,7 +325,7 @@ function createModal() {
                           <div class="modal-due-date">
                                 <label for="due-date" class="label-due-date">Due-date:</label>
                                 <input type="date" id="due-date" name="due-date" class="due-date-input">
-                                <input type="submit" class="submit-due-date">
+                                <div class="submit-due-date">Add Task</div>
                           </div>`;
     return modalDiv;
 }

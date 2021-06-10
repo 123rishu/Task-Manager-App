@@ -15,7 +15,7 @@
     display: flex;
     height: 15vh;
     width: 100%;
-    background: #1e3d44;
+    background: #003d69;
     justify-content: space-evenly;
     align-items: center;
 }
@@ -36,7 +36,7 @@
     display: flex;
     height: 47%;
     width: 24%;
-    background: #336773;
+    background: #0165ac;
     border-radius: 9px;
     justify-content: space-evenly;
     align-items: center;
@@ -86,7 +86,7 @@
     display: flex;
     justify-content: normal;
     align-items: center;
-    background: #336773;
+    background: #0165ac;
     width: 13%;
     height: 45%;
     border-radius: 18px;
@@ -95,7 +95,7 @@
 .open-modal {
     width: 50%;
     height: 100%;
-    background: #336773;
+    background: #0165ac;
     display: flex;
     align-items: center;
     border-radius: 18px;
@@ -103,12 +103,12 @@
 }
 
 .open-modal:hover {
-    background-color: #234750;
+    background-color: #0178ce;
 }
 
 .fas {
     /* padding: 25px; */
-    color: white;
+    /* color: white; */
     font-size: 1.5rem;
 }
 
@@ -118,7 +118,7 @@
 .close-modal {
     width: 50%;
     height: 100%;
-    background: #336773;
+    background: #0165ac;
     display: flex;
     align-items: center;
     border-radius: 18px;
@@ -126,7 +126,7 @@
 }
 
 .close-modal:hover {
-    background-color: #234750;
+    background-color: #0178ce;
 }
 
 .fa-times {
@@ -183,19 +183,24 @@
 
 .realTicketBox {
     justify-content: flex-start;
-    border-bottom-right-radius: 8px;
-    width: 26%;
+    border-bottom-right-radius: 15px;
+    width: 23%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     /* padding: 1px; */
     /* align-items: unset; */
     flex-direction: column;
+    /* border-top-left-radius: 10px; */
     align-self: start;
     display: flex;
-    height: 34%;
-    border-bottom-left-radius: 8px;
-    background: whitesmoke;
+    height: 32%;
+    border-bottom-left-radius: 15px;
+    background: white;
 }
 
 .ticket-header {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     height: 14%;
     width: 100%;
     padding: 0px;
@@ -274,19 +279,19 @@
 
 .arrange-btn {
     font-size: 0.9rem;
-    background: #336773;
+    background: #0165ac;
     height: 30%;
     width: 5%;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    /* color: white; */
     cursor: pointer;
 }
 
 .arrange-btn:hover {
-    background-color: #234750;
+    background-color: #0178ce;
 }
 
 /* Media Queries */
@@ -320,7 +325,6 @@
         width: 47%;
         font-size: 0.8rem;
     }
-    
 
     .tickets-container {
         padding: 3rem;
@@ -349,7 +353,6 @@
         width: 65%;
         font-size: 0.8rem;
     }
-    
 
     .arrange-btn {
         width: 11%;
@@ -370,6 +373,7 @@
         left: calc((100vw - 17rem)/2);
         width: 17rem;
     }
+
     .tickets-container {
         padding: 3rem;
         grid-gap: 31px;
@@ -407,8 +411,7 @@
     }
 }
 
-
-@media(max-width : 450px){
+@media(max-width : 450px) {
     .ticket-box {
         height: 14rem;
         top: 17rem;
@@ -450,6 +453,7 @@
         width: 75%;
         height: 31%;
     }
+
     .tickets-container {
         padding: 3rem;
         grid-gap: 31px;
@@ -463,11 +467,12 @@
     }
 }
 
-@media(max-width: 280px){
+@media(max-width: 280px) {
     .realTicketBox {
         width: 80%;
         height: 48%;
     }
+
     .tickets-container {
         padding: 3rem;
         grid-gap: 31px;
@@ -481,7 +486,7 @@
     }
 }
 
-@media(max-height: 410px){
+@media(max-height: 410px) {
     .realTicketBox {
         width: 80%;
         height: 48%;
@@ -493,13 +498,14 @@
         left: calc((100vw - 16rem)/2);
         width: 16rem;
     }
+
     .tickets-container {
         padding: 3rem;
         grid-gap: 31px;
     }
 }
 
-@media(max-height: 450px){
+@media(max-height: 450px) {
     .realTicketBox {
         width: 73%;
         height: 44%;
@@ -511,13 +517,14 @@
         left: calc((100vw - 18rem)/2);
         width: 16rem;
     }
+
     .tickets-container {
         padding: 3rem;
         grid-gap: 31px;
     }
 }
 
-@media(max-height:550px){
+@media(max-height: 550px) {
     .realTicketBox {
         width: 70%;
         height: 33%;

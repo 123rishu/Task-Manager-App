@@ -36,7 +36,7 @@
     display: flex;
     height: 47%;
     width: 24%;
-    background: #0165ac;
+    background: #001d5a;
     border-radius: 9px;
     justify-content: space-evenly;
     align-items: center;
@@ -86,7 +86,7 @@
     display: flex;
     justify-content: normal;
     align-items: center;
-    background: #0165ac;
+    background: #001d5a;
     width: 13%;
     height: 45%;
     border-radius: 18px;
@@ -95,7 +95,7 @@
 .open-modal {
     width: 50%;
     height: 100%;
-    background: #0165ac;
+    background: #001d5a;
     display: flex;
     align-items: center;
     border-radius: 18px;
@@ -108,7 +108,7 @@
 
 .fas {
     /* padding: 25px; */
-    /* color: white; */
+    color: white;
     font-size: 1.5rem;
 }
 
@@ -118,7 +118,7 @@
 .close-modal {
     width: 50%;
     height: 100%;
-    background: #0165ac;
+    background: #001d5a;
     display: flex;
     align-items: center;
     border-radius: 18px;
@@ -279,14 +279,14 @@
 
 .arrange-btn {
     font-size: 0.9rem;
-    background: #0165ac;
+    background: #001d5a;
     height: 30%;
     width: 5%;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* color: white; */
+    color: white;
     cursor: pointer;
 }
 

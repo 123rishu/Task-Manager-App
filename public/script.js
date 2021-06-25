@@ -219,7 +219,7 @@ function addTicketViaSubmitBtn(modalDiv){
         }
         let modalText = currModalDiv.querySelector(".ticket-textbox").textContent;
         let trimmedText = modalText.trim();
-        if(trimmedText == templateText){
+        if(trimmedText == templateText || trimmedText == ""){
             if (confirm('Are you sure you want to add this without adding any text?')) {
                 // Save it!
               } else {

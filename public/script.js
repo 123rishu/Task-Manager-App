@@ -4,14 +4,7 @@ arrangeBtn.addEventListener("click", arrangeDB);
 let ticketContainer = document.querySelector(".tickets-container");
 let openModalBtn = document.querySelector(".open-modal");
 let closeModalBtn = document.querySelector(".close-modal");
-//let ticketDelete = document.querySelector(".ticket-delete");
-// var today = new Date();
-// var dd = String(today.getDate()).padStart(2, '0');
-// var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-// var yyyy = today.getFullYear();
-// today = yyyy + "-" + mm + "-" + dd;
-// //document.write(today);
-// console.log(today);
+let templateText = "Enter your task here";
 
 function getToday() {
     const today = new Date();
@@ -19,7 +12,6 @@ function getToday() {
     return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 };
 let today = getToday();
-console.log(today);
 
 function getTomorrow() {
     const tomorrow = new Date();
@@ -27,7 +19,6 @@ function getTomorrow() {
     return `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
 };
 let tomDate = getTomorrow();
-console.log(tomDate);
 
 function DAgetTomorrow() {
     const DAtomorrow = new Date();
@@ -35,11 +26,9 @@ function DAgetTomorrow() {
     return `${DAtomorrow.getFullYear()}-${String(DAtomorrow.getMonth() + 1).padStart(2, '0')}-${String(DAtomorrow.getDate()).padStart(2, '0')}`;
 };
 let DAtomDate = DAgetTomorrow();
-console.log(DAtomDate);
 let currDueDate;
 let selectedFilter;
-//console.log(openModalBtn);
-//console.log(ticketContainer);
+
 let obj = {
     "red": "#ff0707",
     "orange": "#FFA500",
@@ -83,28 +72,46 @@ function appendDBElementsOnUI(){
     if (localStorage.getItem("allTickets")) {
         ticketContainer.innerHTML = "";
         let allTickets = JSON.parse(localStorage.getItem("allTickets"));
-        console.log(allTickets);
+        // console.log(allTickets);
         for (let i = 0; i < allTickets.length; i++) {
-            let { ticketId, ticketFilter, ticketContent, ticketDueDate } = allTickets[i];
-            let ticketDiv = createTicket(ticketId, ticketFilter, ticketContent, ticketDueDate);
-            ticketDiv.querySelector(".ticket-header").addEventListener("click", toggleTicketFilter);
-            ticketDiv.querySelector(".ticket-delete i").addEventListener("click", handleTicketDelete);
+            let { ticketId, isLocked, ticketFilter, ticketContent, ticketDueDate } = allTickets[i];
+            let ticketDiv = createTicket(ticketId, isLocked, ticketFilter, ticketContent, ticketDueDate);
+            let deleteBtn = ticketDiv.querySelector(".delete-btn");
+            ticketDiv.querySelector(".lock").addEventListener("click", toggleLockIcon);
+            if(deleteBtn){
+                deleteBtn.addEventListener("click", handleTicketDelete);
+            }
             ticketContainer.append(ticketDiv);
         }
     }
 }
 
-function createTicket(ticketId, ticketFilter, ticketContent, ticketDueDate) {
+function createTicket(ticketId, isLocked, ticketFilter, ticketContent, ticketDueDate) {
     let ticketDiv = document.createElement("div");
     ticketDiv.classList.add("realTicketBox");
-    ticketDiv.innerHTML = `<div class="ticket-header ${ticketFilter}"></div>
+    if(isLocked == "false"){
+        ticketDiv.innerHTML = `<div class="ticket-header ${ticketFilter}"></div>
                 <div class="ticket-info">
                     <div class="ticket-due-date">due date:${ticketDueDate}</div>
                     <div class="ticket-delete">
-                        <i class="fas fa-trash-alt" id=${ticketId}></i>
+                        <i class="lock fas fa-lock-open unlock-btn" id=${ticketId}></i>
+                        <i class="fas fa-trash-alt delete-btn" id=${ticketId}></i>
                     </div>
                 </div>
                 <div class="realText">${ticketContent}</div>`;
+    }
+    else{
+        ticketDiv.innerHTML = `<div class="ticket-header ${ticketFilter}"></div>
+                <div class="ticket-info">
+                    <div class="ticket-due-date">due date:${ticketDueDate}</div>
+                    <div class="ticket-delete">
+                        <i class="lock fas fa-lock" id=${ticketId}></i>
+                        <i class="fas fa-trash-alt delete-btn hide" id=${ticketId}></i>
+                    </div>
+                </div>
+                <div class="realText">${ticketContent}</div>`;
+    }
+    
     return ticketDiv;
 }
 
@@ -168,9 +175,6 @@ function handleOpenModal() {
     modalDiv.querySelector(".ticket-textbox")
         .addEventListener("click", clearModalTextBox);
 
-    modalDiv.querySelector(".ticket-textbox")
-        .addEventListener("keypress", addTicket);
-
     ticketContainer.append(modalDiv);
 }
 
@@ -193,7 +197,10 @@ function setSelectedFilter() {
     else if (currDueDate == tomDate) {
         selectedFilter = "orange";
     }
-    else {
+    else if(new Date(currDueDate) < new Date(today) ){
+        selectedFilter = "black"
+    }
+    else{
         selectedFilter = "green";
     }
 }
@@ -201,8 +208,25 @@ function setSelectedFilter() {
 function addTicketViaSubmitBtn(modalDiv){
         let dueDateInput = currModalDiv.querySelector(".due-date-input");
         currDueDate = dueDateInput.value;
-        let modalTextDiv = currModalDiv.querySelector(".ticket-textbox");
+        if(new Date(currDueDate) < new Date(today) ){
+            if (confirm('Are you sure you want to add this with an earlier date?')) {
+                // Save it!
+                selectedFilter = "black";
+              } else {
+                // Do nothing!
+                return;
+              }
+        }
         let modalText = currModalDiv.querySelector(".ticket-textbox").textContent;
+        let trimmedText = modalText.trim();
+        if(trimmedText == templateText){
+            if (confirm('Are you sure you want to add this without adding any text?')) {
+                // Save it!
+              } else {
+                // Do nothing!
+                return;
+              }
+        }
         let ticketId = uid();
 
         setSelectedFilter();
@@ -215,15 +239,18 @@ function addTicketViaSubmitBtn(modalDiv){
                                             
                                             <div class="ticket-due-date">due date:${dueDateInput.value}</div>
                                             <div class="ticket-delete">
-                                                    <i class="fas fa-trash-alt" id=${ticketId}></i>
+                                                    <i class="lock fas fa-lock-open unlock-btn" id=${ticketId}></i>
+                                                    <i class="fas fa-trash-alt delete-btn" id=${ticketId}></i>
                                             </div>
                                     </div>
                                     <div class="realText">${modalText}</div>`;
         ticketDiv.querySelector(".ticket-header").addEventListener("click", toggleTicketFilter);
-        ticketDiv.querySelector(".ticket-delete i").addEventListener("click", handleTicketDelete);
+        ticketDiv.querySelector(".delete-btn").addEventListener("click", handleTicketDelete);
         ticketContainer.append(ticketDiv);
 
        currModalDiv.remove();
+
+       ticketDiv.querySelector(".lock").addEventListener("click", toggleLockIcon);
 
         //ticket has been appended on the document!!!
         //false, null, undefined, 0, "", NaN
@@ -232,6 +259,7 @@ function addTicketViaSubmitBtn(modalDiv){
             let allTickets = [];
             let ticketObject = {};
             ticketObject.ticketId = ticketId;
+            ticketObject.isLocked = "false";
             ticketObject.ticketFilter = selectedFilter;
             ticketObject.ticketContent = modalText;
             ticketObject.ticketDueDate = dueDateInput.value;
@@ -242,6 +270,7 @@ function addTicketViaSubmitBtn(modalDiv){
             let allTickets = JSON.parse(localStorage.getItem("allTickets"));
             let ticketObject = {};
             ticketObject.ticketId = ticketId;
+            ticketObject.isLocked = "false";
             ticketObject.ticketFilter = selectedFilter;
             ticketObject.ticketContent = modalText;
             ticketObject.ticketDueDate = dueDateInput.value;
@@ -250,60 +279,6 @@ function addTicketViaSubmitBtn(modalDiv){
         }
 
         console.log("reached here");
-}
-
-function addTicket(e) {
-    if (e.key == "Enter") {
-        console.log(e);
-        let dueDateInput = document.querySelector(".due-date-input");
-        currDueDate = dueDateInput.value;
-
-        let modalText = e.target.textContent;
-        let ticketId = uid();
-
-        setSelectedFilter();
-
-        let ticketDiv = document.createElement("div");
-        ticketDiv.classList.add("realTicketBox");
-        ticketDiv.innerHTML = `<div class="ticket-header ${selectedFilter}"></div>
-                                    <div class="ticket-info">
-                                            <div class="ticket-due-date">due date:${dueDateInput.value}</div>
-                                            <div class="ticket-delete">
-                                                    <i class="fas fa-trash-alt" id=${ticketId}></i>
-                                            </div>
-                                    </div>
-                                    <div class="realText">${modalText}</div>`;
-        ticketDiv.querySelector(".ticket-header").addEventListener("click", toggleTicketFilter);
-        ticketDiv.querySelector(".ticket-delete i").addEventListener("click", handleTicketDelete);
-        ticketContainer.append(ticketDiv);
-
-        e.target.parentNode.remove();
-
-        //ticket has been appended on the document!!!
-        //false, null, undefined, 0, "", NaN
-        if (!localStorage.getItem('allTickets')) {
-            //first time ticket ayegi
-            let allTickets = [];
-            let ticketObject = {};
-            ticketObject.ticketId = ticketId;
-            ticketObject.ticketFilter = selectedFilter;
-            ticketObject.ticketContent = modalText;
-            ticketObject.ticketDueDate = dueDateInput.value;
-            allTickets.push(ticketObject);
-            localStorage.setItem("allTickets", JSON.stringify(allTickets));
-        }
-        else {
-            let allTickets = JSON.parse(localStorage.getItem("allTickets"));
-            let ticketObject = {};
-            ticketObject.ticketId = ticketId;
-            ticketObject.ticketFilter = selectedFilter;
-            ticketObject.ticketContent = modalText;
-            ticketObject.ticketDueDate = dueDateInput.value;
-            allTickets.push(ticketObject);
-            localStorage.setItem("allTickets", JSON.stringify(allTickets));
-        }
-        //selectedFilter = "red";
-    }
 }
 
 function clearModalTextBox(e) {
@@ -375,7 +350,8 @@ function loadSelectedTickets(ticketFilter) {
                     <div class="ticket-info">
                         <div class="realTextBoxID">#${ticketId}</div>
                         <div class="ticket-delete">
-                            <i class="fas fa-trash-alt" id=${ticketId}></i>
+                            <i class="fas fa-lock-open"></i>
+                            <i class="fas fa-trash-alt delete-btn" id=${ticketId}></i>
                         </div>
                     </div>
                 <div class="realText">${ticketContent}</div>`;
@@ -410,4 +386,50 @@ function insertCurrColorTicketsInNewDb(allTickets, currColorArrange, newAllTicke
             newAllTickets.push(ticketObject);
         }
     }
+}
+
+let lockUnlockBtnIcons = document.querySelectorAll(".lock");
+console.log(lockUnlockBtnIcons);
+for(let i=0;i<lockUnlockBtnIcons.length;i++){
+    lockUnlockBtnIcons[i].addEventListener("click", toggleLockIcon);
+}
+
+function toggleLockIcon(e){
+    console.log("khsbkc");
+    let currDiv = e.target;
+    let deleteBtnDiv = e.target.nextElementSibling;
+    let currBtnId = e.target.id;
+    //UI CHANGES
+    if(currDiv.classList.contains("fa-lock")){
+        console.log("ksdbvhs");
+        currDiv.classList.remove("fa-lock");  
+        currDiv.classList.add("fa-lock-open");
+        currDiv.classList.add("unlock-btn");
+        deleteBtnDiv.classList.remove("hide");
+
+        let allTickets = JSON.parse(localStorage.getItem("allTickets"));
+        for(let i=0;i<allTickets.length;i++){
+            let currTicketObj = allTickets[i];
+            if(currTicketObj.ticketId == currBtnId){
+                currTicketObj.isLocked = "false";
+            }
+        }
+        localStorage.setItem("allTickets", JSON.stringify(allTickets));
+    }
+    else{
+        currDiv.classList.remove("fa-lock-open");
+        currDiv.classList.remove("unlock-btn");
+        currDiv.classList.add("fa-lock"); 
+        deleteBtnDiv.classList.add("hide");
+        
+        let allTickets = JSON.parse(localStorage.getItem("allTickets"));
+        for(let i=0;i<allTickets.length;i++){
+            let currTicketObj = allTickets[i];
+            if(currTicketObj.ticketId == currBtnId){
+                currTicketObj.isLocked = "true";
+            }
+        }
+        localStorage.setItem("allTickets", JSON.stringify(allTickets));
+    }
+
 }

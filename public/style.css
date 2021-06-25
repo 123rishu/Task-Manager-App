@@ -228,10 +228,29 @@
     padding: 3px;
 }
 
+.hide{
+    visibility: hidden;
+}
+
+.fa-lock-open {
+    color: black;
+    padding: 6px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.fa-lock{
+    color: black;
+    padding: 6px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
 .fa-trash-alt {
     color: black;
     margin: 8px;
     cursor: pointer;
+    font-size: 1.2rem;
 }
 
 .modal-due-date {

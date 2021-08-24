@@ -6,6 +6,7 @@ let openModalBtn = document.querySelector(".open-modal");
 let closeModalBtn = document.querySelector(".close-modal");
 let templateText = "Enter your task here";
 
+
 function getToday() {
     const today = new Date();
     today.setDate(today.getDate()); // even 32 is acceptable
@@ -227,7 +228,8 @@ function addTicketViaSubmitBtn(modalDiv){
                 return;
               }
         }
-        let ticketId = uid();
+        let ticketId = Math.floor(Math.random() * 100)
+
 
         setSelectedFilter();
         //<div class="realTextBoxID">#${ticketId}</div>

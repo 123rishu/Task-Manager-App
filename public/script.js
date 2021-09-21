@@ -184,7 +184,7 @@ function addTicketViaSubmitBtn(modalDiv){
                                         </div>
                                 </div>
                                 <div class="realText">${modalText}</div>`;
-    ticketDiv.querySelector(".ticket-header").addEventListener("click", toggleTicketFilter);
+    
     ticketDiv.querySelector(".delete-btn").addEventListener("click", handleTicketDelete);
     ticketContainer.append(ticketDiv);
 

@@ -32,14 +32,13 @@ let obj = {
 //TODAY
 function getToday() {
     const today = new Date();
-    today.setDate(today.getDate()); // even 32 is acceptable
     return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 };
 let today = getToday();
 //TOMORROW
 function getTomorrow() {
     const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate()+1); // even 32 is acceptable
+    tomorrow.setDate(tomorrow.getDate() + 1); 
     return `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
 };
 let tomDate = getTomorrow();
@@ -63,32 +62,33 @@ function loadTickets() {
     if (localStorage.getItem("allTickets")) {
         ticketContainer.innerHTML = "";
         let allTickets = JSON.parse(localStorage.getItem("allTickets"));
-        console.log(allTickets);
+        //console.log(allTickets);
         updateDB(allTickets);
+        appendDBElementsOnUI();
     }
 }
-function updateDB(allTickets){
+function updateDB(allTickets) {
     let newAllTickets = [];
-    for(let i=0;i<allTickets.length;i++){
+    for (let i = 0; i < allTickets.length; i++) {
         let ticketObj = allTickets[i];
-        if (new Date(ticketObj.ticketDueDate) < new Date(today) ){
+        if (new Date(ticketObj.ticketDueDate) < new Date(today)) {
             ticketObj.ticketFilter = "black";
         }
-        else if(new Date(ticketObj.ticketDueDate) > new Date(tomDate) ){
+        else if (new Date(ticketObj.ticketDueDate) > new Date(tomDate)) {
             ticketObj.ticketFilter = "green";
         }
-        else if((new Date(ticketObj.ticketDueDate) > new Date(today)) && (new Date(ticketObj.ticketDueDate) < new Date(DAtomDate))){
+        else if ((new Date(ticketObj.ticketDueDate) > new Date(today)) && (new Date(ticketObj.ticketDueDate) < new Date(DAtomDate))) {
             ticketObj.ticketFilter = "orange";
         }
-        else{
+        else {
             ticketObj.ticketFilter = "red";
         }
         newAllTickets.push(ticketObj);
     }
     localStorage.setItem("allTickets", JSON.stringify(newAllTickets));
-    appendDBElementsOnUI();
+
 }
-function appendDBElementsOnUI(){
+function appendDBElementsOnUI() {
     if (localStorage.getItem("allTickets")) {
         ticketContainer.innerHTML = "";
         let allTickets = JSON.parse(localStorage.getItem("allTickets"));
@@ -98,7 +98,7 @@ function appendDBElementsOnUI(){
             let ticketDiv = createTicket(ticketId, isLocked, ticketFilter, ticketContent, ticketDueDate);
             let deleteBtn = ticketDiv.querySelector(".delete-btn");
             ticketDiv.querySelector(".lock").addEventListener("click", toggleLockIcon);
-            if(deleteBtn){
+            if (deleteBtn) {
                 deleteBtn.addEventListener("click", handleTicketDelete);
             }
             ticketContainer.append(ticketDiv);
@@ -122,7 +122,7 @@ function handleOpenModal() {
     let modalDiv = createModal();
     currModalDiv = modalDiv;
     modalDiv.querySelector(".submit-due-date")
-        .addEventListener("click" , addTicketViaSubmitBtn);
+        .addEventListener("click", addTicketViaSubmitBtn);
 
     modalDiv.querySelector(".ticket-textbox")
         .addEventListener("click", clearModalTextBox);
@@ -144,34 +144,37 @@ function createModal() {
     return modalDiv;
 }
 //To submit the current ticket and also loading this ticket on the main UI
-function addTicketViaSubmitBtn(modalDiv){
+function addTicketViaSubmitBtn(modalDiv) {
+    //OPERATIONS TO ADD A TICKET AND CLOSE THE MODAL (UI WORK) 
+    //storing the entered due date
     let dueDateInput = currModalDiv.querySelector(".due-date-input");
+    //setting currDueDate value
     currDueDate = dueDateInput.value;
-    if(new Date(currDueDate) < new Date(today) ){
+    //in case user adds a ticket with a due date before today
+    if (new Date(currDueDate) < new Date(today)) {
         if (confirm('Are you sure you want to add this with an earlier date?')) {
             // Save it!
             selectedFilter = "black";
-          } else {
+        } else {
             // Do nothing!
             return;
-          }
+        }
     }
+    //storing the entered modal text
     let modalText = currModalDiv.querySelector(".ticket-textbox").textContent;
     let trimmedText = modalText.trim();
-    if(trimmedText == templateText || trimmedText == ""){
+    if (trimmedText == templateText || trimmedText == "") {
         if (confirm('Are you sure you want to add this without adding any text?')) {
             // Save it!
-          } else {
-            // Do nothing!
+        } else {
+            // Do nothing! and go back
             return;
-          }
+        }
     }
-    let ticketId = Math.floor(Math.random() * 100)
-
-
+    //creating the unique id of each ticket
+    let ticketId = Math.floor(Math.random() * 100);
+    //it will select the color of ticket according to the due dates
     setSelectedFilter();
-    //<div class="realTextBoxID">#${ticketId}</div>
-
     let ticketDiv = document.createElement("div");
     ticketDiv.classList.add("realTicketBox");
     ticketDiv.innerHTML = `<div class="ticket-header ${selectedFilter}"></div>
@@ -184,14 +187,15 @@ function addTicketViaSubmitBtn(modalDiv){
                                         </div>
                                 </div>
                                 <div class="realText">${modalText}</div>`;
-    
+
     ticketDiv.querySelector(".delete-btn").addEventListener("click", handleTicketDelete);
+    ticketDiv.querySelector(".lock").addEventListener("click", toggleLockIcon);
     ticketContainer.append(ticketDiv);
 
-   currModalDiv.remove();
+    //removing the current Modal
+    currModalDiv.remove();
 
-   ticketDiv.querySelector(".lock").addEventListener("click", toggleLockIcon);
-
+    //OPERATIONS TO ADD A TICKET (DB WORK)
     //ticket has been appended on the document!!!
     //false, null, undefined, 0, "", NaN
     if (!localStorage.getItem('allTickets')) {
@@ -207,6 +211,7 @@ function addTicketViaSubmitBtn(modalDiv){
         localStorage.setItem("allTickets", JSON.stringify(allTickets));
     }
     else {
+        //When already 1 or more tickets exist in our db
         let allTickets = JSON.parse(localStorage.getItem("allTickets"));
         let ticketObject = {};
         ticketObject.ticketId = ticketId;
@@ -217,8 +222,6 @@ function addTicketViaSubmitBtn(modalDiv){
         allTickets.push(ticketObject);
         localStorage.setItem("allTickets", JSON.stringify(allTickets));
     }
-
-    console.log("reached here");
 }
 //To clear the text box inside the modal
 function clearModalTextBox(e) {
@@ -317,7 +320,7 @@ function loadSelectedTickets(ticketFilter) {
             //adding event listeners on the lock icon and delete button
             let deleteBtn = ticketDiv.querySelector(".delete-btn");
             ticketDiv.querySelector(".lock").addEventListener("click", toggleLockIcon);
-            if(deleteBtn){
+            if (deleteBtn) {
                 deleteBtn.addEventListener("click", handleTicketDelete);
             }
             //now append this ticket on the TicketContainer
@@ -335,38 +338,37 @@ function loadSelectedTickets(ticketFilter) {
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------//
 //General Used Functions
-function toggleLockIcon(e){
-    console.log("khsbkc");
+function toggleLockIcon(e) {
     let currDiv = e.target;
     let deleteBtnDiv = e.target.nextElementSibling;
     let currBtnId = e.target.id;
     //UI CHANGES
-    if(currDiv.classList.contains("fa-lock")){
+    if (currDiv.classList.contains("fa-lock")) {
         console.log("ksdbvhs");
-        currDiv.classList.remove("fa-lock");  
+        currDiv.classList.remove("fa-lock");
         currDiv.classList.add("fa-lock-open");
         currDiv.classList.add("unlock-btn");
         deleteBtnDiv.classList.remove("hide");
 
         let allTickets = JSON.parse(localStorage.getItem("allTickets"));
-        for(let i=0;i<allTickets.length;i++){
+        for (let i = 0; i < allTickets.length; i++) {
             let currTicketObj = allTickets[i];
-            if(currTicketObj.ticketId == currBtnId){
+            if (currTicketObj.ticketId == currBtnId) {
                 currTicketObj.isLocked = "false";
             }
         }
         localStorage.setItem("allTickets", JSON.stringify(allTickets));
     }
-    else{
+    else {
         currDiv.classList.remove("fa-lock-open");
         currDiv.classList.remove("unlock-btn");
-        currDiv.classList.add("fa-lock"); 
+        currDiv.classList.add("fa-lock");
         deleteBtnDiv.classList.add("hide");
-        
+
         let allTickets = JSON.parse(localStorage.getItem("allTickets"));
-        for(let i=0;i<allTickets.length;i++){
+        for (let i = 0; i < allTickets.length; i++) {
             let currTicketObj = allTickets[i];
-            if(currTicketObj.ticketId == currBtnId){
+            if (currTicketObj.ticketId == currBtnId) {
                 currTicketObj.isLocked = "true";
             }
         }
@@ -391,17 +393,17 @@ function setSelectedFilter() {
     else if (currDueDate == tomDate) {
         selectedFilter = "orange";
     }
-    else if(new Date(currDueDate) < new Date(today) ){
+    else if (new Date(currDueDate) < new Date(today)) {
         selectedFilter = "black"
     }
-    else{
+    else {
         selectedFilter = "green";
     }
 }
 function createTicket(ticketId, isLocked, ticketFilter, ticketContent, ticketDueDate) {
     let ticketDiv = document.createElement("div");
     ticketDiv.classList.add("realTicketBox");
-    if(isLocked == "false"){
+    if (isLocked == "false") {
         ticketDiv.innerHTML = `<div class="ticket-header ${ticketFilter}"></div>
                 <div class="ticket-info">
                     <div class="ticket-due-date">due date:${ticketDueDate}</div>
@@ -412,7 +414,7 @@ function createTicket(ticketId, isLocked, ticketFilter, ticketContent, ticketDue
                 </div>
                 <div class="realText">${ticketContent}</div>`;
     }
-    else{
+    else {
         ticketDiv.innerHTML = `<div class="ticket-header ${ticketFilter}"></div>
                 <div class="ticket-info">
                     <div class="ticket-due-date">due date:${ticketDueDate}</div>
@@ -423,7 +425,7 @@ function createTicket(ticketId, isLocked, ticketFilter, ticketContent, ticketDue
                 </div>
                 <div class="realText">${ticketContent}</div>`;
     }
-    
+
     return ticketDiv;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------//
@@ -434,7 +436,7 @@ function createTicket(ticketId, isLocked, ticketFilter, ticketContent, ticketDue
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------//
 //Toggle Lock Icon
-for(let i=0;i<lockUnlockBtnIcons.length;i++){
+for (let i = 0; i < lockUnlockBtnIcons.length; i++) {
     lockUnlockBtnIcons[i].addEventListener("click", toggleLockIcon);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------//
